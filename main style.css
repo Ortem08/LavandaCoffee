@@ -1,0 +1,77 @@
+
+header {
+    position: fixed;
+    top: -8px;
+    width: 100vw;
+    height: calc(100vw * 0.2);
+    z-index: 1;
+}
+
+#header-background {
+    position: absolute;
+    z-index: -1;
+}
+
+#telegram-login-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4%;
+    padding-right: 10%;
+    height: 15%;
+}
+
+#telegram-login-button {
+    border-radius: 50px;
+    width: 25%;
+    height: 100%;
+}
+
+#header-nav {
+    display: flex;
+    margin-top: 2%;
+}
+
+#nav-brand-logo {
+    width: 200px;
+    height: 100px;
+    flex-grow: 1;
+}
+
+#navbar-container {
+    flex-grow: 1;
+}
+
+#navbar {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    margin: 0px;
+}
+
+#navbar li a{
+    font-size: 25px;
+}
+
+#main-container {
+    position: relative;
+    padding-top: 10%;
+}
+
+#menu-info {
+    position: absolute;
+    right: 5%;
+    bottom: 15%;
+    width: 50%;
+    text-align: center;
+}
+
+#menu-info article {
+    font-size: 25px;
+    margin: 30px 160px;
+}
+
+#view-menu-button {
+    width: 250px;
+    height: 50px;
+    border-radius: 50px;
+}
