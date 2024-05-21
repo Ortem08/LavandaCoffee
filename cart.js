@@ -5,11 +5,9 @@ class ItemCard{
         this.name = name;
         this.cost = cost;
         this.amount = amount;
-
-        this.addItemToItemList();
     }
 
-    addItemToItemList(){
+    createItemViewElement(){
         const itemTemplate = document.querySelector(".cart-form #item-template");
         const node = itemTemplate.content.cloneNode(true);
         node.querySelector(".item-name").textContent = this.name;
@@ -20,8 +18,10 @@ class ItemCard{
         itemCounter.setAttribute('value', String(this.amount));
         itemCounter.addEventListener('input', (ev) => this.onCountChanged(ev));
         
+        node.querySelector('.itemID').setAttribute('value', String(this.itemID));
+
         this.updateView(node);
-        document.querySelector(".cart-form .item-list").appendChild(node);
+        return node;
     }
 
     onCountChanged(event){
@@ -45,8 +45,16 @@ class ItemCard{
 }
 
 
-const here = new ItemCard("kajfdh", "coffee for a dog", 1000, 12);
+function addItemToItemList(card){
+    const node = card.createItemViewElement();
+    document.querySelector(".cart-form .item-list").appendChild(node);
+}
 
-new ItemCard("kajfdh2", "coffee for a fish", 400, 2);
 
-new ItemCard("kajfdh3", "coffee for a hooman", 10, 13);
+addItemToItemList(new ItemCard("kajfdh", "coffee for a dog", 1000, 12));
+
+addItemToItemList(new ItemCard("kajfdh2", "coffee for a fish", 400, 2));
+
+for (let i = 0; i < 10; i++){
+    addItemToItemList(new ItemCard("kajfdh3", "coffee for a hooman", 10, i + 1));
+}
