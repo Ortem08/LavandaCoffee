@@ -2,6 +2,7 @@
 header {
     position: fixed;
     top: -8px;
+    left: -8px;
     width: 100vw;
     height: calc(100vw * 0.2);
     z-index: 1;
