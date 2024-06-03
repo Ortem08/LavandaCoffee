@@ -1,0 +1,128 @@
+
+header {
+    position: fixed;
+    top: -8px;
+    left: -8px;
+    width: 100vw;
+    height: calc(100vw * 0.2);
+    z-index: 1;
+}
+
+#header-background {
+    position: absolute;
+    z-index: -1;
+}
+
+#telegram-login-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4%;
+    padding-right: 10%;
+    height: 15%;
+}
+
+#telegram-login-button {
+    border-radius: 50px;
+    width: 25%;
+    height: 100%;
+}
+
+#header-nav {
+    display: flex;
+    margin-top: 2%;
+}
+
+#nav-logo {
+    width: 200px;
+    height: 100px;
+    flex-grow: 1;
+}
+
+#navbar-container {
+    flex-grow: 1;
+}
+
+#navbar {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    margin: 0px;
+}
+
+.nav-item a {
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.nav-item a:visited {
+    color: black;
+}
+
+#main-container {
+    position: relative;
+    padding-top: 10%;
+}
+
+#menu-info {
+    position: absolute;
+    right: 5%;
+    bottom: 15%;
+    width: 50%;
+    text-align: center;
+}
+
+#menu-info article {
+    font-size: 25px;
+    margin: 5% 20%;
+}
+
+#view-menu-button {
+    width: 250px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+footer {
+    text-align: center;
+    color: #4A2555;
+    background-color: #C2AAE4;
+    padding: 50px;
+}
+
+#social-media {
+    display: flex;
+    justify-content: center;
+}
+
+#social-media article {
+    width: 50%;
+}
+
+footer hr{
+    border-style: none;
+    background-color: #4A2555;
+    height: 2px;
+    margin-top: 50px;
+}
+
+#send-feedback-button {
+    border-radius: 30px;
+    border-color: #4A2555;
+    background-color: transparent;
+    padding: 3% 7%;
+}
+
+footer #brand-info {
+    display: flex;
+    justify-content: center;
+    text-align: left;
+}
+
+footer .brand-info {
+    margin: 0px 20px;
+}
+
+footer .policy {
+    display: flex;
+    flex-direction: column;
+}
