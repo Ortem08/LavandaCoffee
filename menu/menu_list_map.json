@@ -30,18 +30,15 @@
             "default_variant_ind" : 0,
             "variants" : [
                 {
-                    "value" : 100,
-                    "string_value" : "100 мл",
+                    "value" : "100 мл",
                     "price_increase" : 0
                 },
                 {
-                    "value" : 150,
-                    "string_value" : "150 мл",
+                    "value" : "150 мл",
                     "price_increase" : 10
                 },
                 {
-                    "value" : 200,
-                    "string_value" : "200 мл",
+                    "value" : "200 мл",
                     "price_increase" : 20
                 }
             ]
