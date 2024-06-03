@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title> Корзина </title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <form class="cart-form">
+            <template id="item-template">
+                <fieldset class="item-card">
+                    <h3>
+                        <span class="item-name">coffee on beer</span>
+                        <input type="number" name="item-amount" class="item-amount" min="1" max="50" value="1">
+                    </h4>
+                    <button type="button" class="remove-button">X</button>
+                    <input type="hidden" name="itemID" class="itemID" value="723AFE023">
+                    <div>
+                        <span>
+                            total cost is
+                            <span class="multi-item-cost">multi-item-cost $</span>
+                            =
+                            <span class="one-item-cost">one-item-cost $</span>
+                            *
+                            <span class="amount-of-items-view">item-amount</span>
+                        </span>
+                    </div>
+                </fieldset>
+            </template>
+            
+            <div class="item-list"></div>
+            
+            <label>
+                Ваш тег в телеграмме
+                <input type="text" name="telegram-tag" class="telegram-tag-input" required>
+            </label>
+
+            <button type="submit" class="submit-button"> Order </button>
+        </form>
+    </body>
+    <script src="cart.js"></script>
+</html>
