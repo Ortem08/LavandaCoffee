@@ -19,9 +19,18 @@
         {
             "id" : 3456789,
             "name" : "Чизкейк",
+            "type" : "dessert",
             "image_name" : "skjdhsldjooooooooooooo",
             "base_price" : 350,
             "available_options" : ["topping"]
+        },
+        {
+            "id" : 42,
+            "name" : "The Answer to the Ultimate Question of Life, the Universe, and Everything",
+            "type" : "dessert",
+            "image_name" : "Answer_to_Life.png",
+            "base_price" : 7500000,
+            "available_options" : ["volume_tier_medium", "topping"]
         }
     ],
 
