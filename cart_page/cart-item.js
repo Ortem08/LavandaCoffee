@@ -47,6 +47,8 @@ export class CartItemCard{
         itemCounter.addEventListener('input', (ev) => this.onCountChanged(ev));
         
         node.querySelector('.itemID').setAttribute('value', String(this.itemID));
+        node.querySelector('.itemOptions').setAttribute('value', JSON.stringify(this._orderItem.options));
+        // console.log(node.querySelector('.itemOptions').getAttribute('value'));
 
         this.updateView(node);
         return node;
