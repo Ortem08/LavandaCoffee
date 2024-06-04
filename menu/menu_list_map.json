@@ -1,0 +1,90 @@
+{
+    "menu_items" : [
+        {
+            "id" : 111,
+            "name" : "Кофе с лавандой фирменный",
+            "type" : "drink",
+            "image_name" : "skjdhsldjkf",
+            "base_price" : 100,
+            "available_options" : ["volume_tier_small"]
+        },
+        {
+            "id" : 222,
+            "name" : "Капучино",
+            "type" : "drink",
+            "image_name" : "kkkkk",
+            "base_price" : 100,
+            "available_options" : []
+        },
+        {
+            "id" : 3456789,
+            "name" : "Чизкейк",
+            "type" : "dessert",
+            "image_name" : "skjdhsldjooooooooooooo",
+            "base_price" : 100,
+            "available_options" : ["topping"]
+        },
+        {
+            "id" : 42,
+            "name" : "The Answer to the Ultimate Question of Life, the Universe, and Everything",
+            "type" : "dessert",
+            "image_name" : "Answer_to_Life.png",
+            "base_price" : 100,
+            "available_options" : ["volume_tier_small", "topping"]
+        }
+    ],
+
+    "options" : {
+        "volume_tier_small" : {
+            "default_variant_ind" : 0,
+            "variants" : [
+                {
+                    "value" : "100 мл",
+                    "price_increase" : 0
+                },
+                {
+                    "value" : "150 мл",
+                    "price_increase" : 10
+                },
+                {
+                    "value" : "200 мл",
+                    "price_increase" : 20
+                }
+            ]
+        },
+        "volume_tier_medium" : {
+            "default_variant_ind" : 0,
+            "variants" : [
+                {
+                    "value" : "300 мл",
+                    "price_increase" : 0
+                },
+                {
+                    "value" : "450 мл",
+                    "price_increase" : 75
+                },
+                {
+                    "value" : "600 мл",
+                    "price_increase" : 150
+                }
+            ]
+        },
+        "topping" : {
+            "multichoice" : true,
+            "variants" : [
+                {
+                    "value" : "Клубника",
+                    "price_increase" : 30
+                },
+                {
+                    "value" : "Клюква",
+                    "price_increase" : 30
+                },
+                {
+                    "value" : "Шоколад",
+                    "price_increase" : 25
+                }
+            ]
+        }
+    }
+}
