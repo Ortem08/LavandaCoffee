@@ -57,6 +57,7 @@ header {
 .nav-item a {
     font-size: 25px;
     text-decoration: none;
+    color: black;
 }
 
 .nav-item a:visited {
