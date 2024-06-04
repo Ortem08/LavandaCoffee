@@ -1,90 +1,164 @@
 export class MenuItemVisualizer {
-    constructor(menuItem) {
+    constructor(menuItem, menuModel) {
         this.menuItem = menuItem;
-        this.selectedOption = menuItem.options[0];
+        this.menuModel = menuModel;
+        this.selectedOptions = new Map();
+
+        this.initializeSelectedOptions();
+    }
+
+    initializeSelectedOptions() {
+        this.menuItem.available_options_names.forEach(optionName => {
+            const optionModel = this.menuModel.get_option_model_by_name(optionName);
+            if (optionModel) {
+                if (optionModel.multichoice) {
+                    this.selectedOptions.set(optionModel.name, []);
+                } else {
+                    this.selectedOptions.set(optionModel.name, optionModel.get_default_variant());
+                }
+            }
+        });
     }
 
     addToCart() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let name = this.menuItem.name;
-        if (this.selectedOption.option){
-            name += `, ${this.selectedOption.option}`;
-        }
-        cart.push({ id: this.menuItem.id, name: name, price: this.selectedOption.price });
+        const { name, totalPrice } = this.calculateCartDetails();
+
+        cart.push({ id: this.menuItem.id, name, price: totalPrice });
         localStorage.setItem('cart', JSON.stringify(cart));
 
         alert(`${name} добавлен в корзину`);
         console.log(localStorage.getItem('cart'));
-        // localStorage.removeItem('cart');
+    }
+
+    calculateCartDetails() {
+        let name = this.menuItem.name;
+        let totalPrice = this.menuItem.base_price;
+
+        this.selectedOptions.forEach((selectedOptions, optionName) => {
+            if (Array.isArray(selectedOptions)) {
+                selectedOptions.forEach(option => {
+                    if (option.value) {
+                        name += `, ${option.value}`;
+                        totalPrice += option.price_increase;
+                    }
+                });
+            } else if (selectedOptions.value) {
+                name += `, ${selectedOptions.value}`;
+                totalPrice += selectedOptions.price_increase;
+            }
+        });
+
+        return { name, totalPrice };
     }
 
     visualize() {
         const menuItem = this.createMenuItemElement();
-        const options = this.createOptionVisualization();
+        const optionsContainer = menuItem.querySelector('.options-container');
 
-        menuItem
-            .querySelector('.options-container')
-            .appendChild(options);
+        this.menuItem.available_options_names.forEach(optionName => {
+            const optionModel = this.menuModel.get_option_model_by_name(optionName);
+            if (optionModel) {
+                const optionSelector = this.createSelector(optionModel);
+                optionsContainer.appendChild(optionSelector);
+            }
+        });
 
         this.handleAddToCart(menuItem);
-        if (options.className === 'option-select'){
-            this.updatePriceOnChange(options, menuItem);
-        }
+        this.updatePrice(menuItem);
 
         return menuItem;
     }
 
-    handleAddToCart(menuItem){
-        menuItem
-            .querySelector('.add-to-cart-button')
-            .addEventListener('click', () => this.addToCart());
-    }
-
-    updatePriceOnChange(selector, menuItem) {
-        selector.addEventListener('change', () => {
-            const selectedIndex = selector.selectedIndex;
-            this.selectedOption = this.menuItem.options[selectedIndex];
-            const newPrice = this.selectedOption.price;
-            menuItem.querySelector('.price').textContent = `${newPrice} ₽`;
-        });
+    handleAddToCart(menuItem) {
+        menuItem.querySelector('.add-to-cart-button').addEventListener('click', () => this.addToCart());
     }
 
     createMenuItemElement() {
         const menuItem = document.createElement('div');
         menuItem.className = 'menu-item';
         menuItem.innerHTML = `
-            <img src="./menu-image/${this.menuItem.id}" alt="${this.menuItem.name}">
-            <p class="name">${this.menuItem.name}</p>
-            <div class="options-container"></div>
-            <p class="price">${this.selectedOption.price} ₽</p>
-            <button class="add-to-cart-button">Добавить в корзину</button>
+            <img class="menu-item-image" src="./menu-image/${this.menuItem.image_name}" alt="${this.menuItem.name}">
+            <div class="menu-item-details">
+                <p class="menu-item-name">${this.menuItem.name}</p>
+                <div class="options-container"></div>
+                <p class="menu-item-price">${this.menuItem.base_price} ₽</p>
+                <button class="add-to-cart-button">Добавить в корзину</button>
+            </div>
         `;
         return menuItem;
     }
 
+    createSelector(optionModel) {
+        const container = document.createElement('div');
+        container.className = 'option-container';
 
-    createOptionVisualization() {
-        if (Array.isArray(this.menuItem.options) && this.menuItem.options.length > 1) {
-            return this.createSelector(this.menuItem.options);
+        if (optionModel.multichoice) {
+            this.createMultiChoiceOptions(optionModel, container);
+        } else {
+            container.classList.add('horizontal');
+            this.createSingleChoiceOptions(optionModel, container);
         }
 
-        const p = document.createElement('p');
-        p.textContent = this.selectedOption.option;
-
-        return p;
+        return container;
     }
 
-    createSelector(options) {
-        const selector = document.createElement('select');
-        selector.className = 'option-select';
+    createMultiChoiceOptions(optionModel, container) {
+        optionModel.possible_variants.forEach(variant => {
+            const label = document.createElement('label');
+            label.innerHTML = `
+                <input type="checkbox" value="${variant.value}">
+                <span>${variant.value}<br>(+${variant.price_increase} ₽)</span>
+            `;
+            label.querySelector('input').addEventListener('change', () => {
+                this.updateSelectedOptions(optionModel, container);
+                this.updatePrice(container.closest('.menu-item'));
+            });
 
-        options.forEach(menuItemOption => {
-            const element = document.createElement('option');
-            element.value = menuItemOption.option;
-            element.textContent = menuItemOption.option;
-            selector.appendChild(element);
+            container.appendChild(label);
+        });
+    }
+
+    createSingleChoiceOptions(optionModel, container) {
+        optionModel.possible_variants.forEach((variant, index) => {
+            const label = document.createElement('label');
+            label.innerHTML = `
+                <input type="radio" name="${optionModel.name}" value="${variant.value}" ${index === 0 ? 'checked' : ''}>
+                <span>${variant.value}<br>(+${variant.price_increase} ₽)</span>
+            `;
+            label.querySelector('input').addEventListener('change', (event) => {
+                this.updateSelectedOptions(optionModel, event.target.value);
+                this.updatePrice(container.closest('.menu-item'));
+            });
+
+            container.appendChild(label);
+        });
+    }
+
+    updateSelectedOptions(optionModel, containerOrValue) {
+        if (optionModel.multichoice) {
+            const selectedValues = Array.from(containerOrValue.querySelectorAll('input:checked')).map(input => input.value);
+            const selectedVariants = selectedValues.map(value => optionModel.get_variant_by_value(value));
+            this.selectedOptions.set(optionModel.name, selectedVariants);
+        } else {
+            const selectedVariant = optionModel.get_variant_by_value(containerOrValue);
+            this.selectedOptions.set(optionModel.name, selectedVariant);
+        }
+    }
+
+    updatePrice(menuItem) {
+        let totalPrice = this.menuItem.base_price;
+
+        this.selectedOptions.forEach(selectedOptions => {
+            if (Array.isArray(selectedOptions)) {
+                selectedOptions.forEach(option => {
+                    totalPrice += option.price_increase;
+                });
+            } else {
+                totalPrice += selectedOptions.price_increase;
+            }
         });
 
-        return selector;
+        menuItem.querySelector('.menu-item-price').textContent = `${totalPrice} ₽`;
     }
 }
