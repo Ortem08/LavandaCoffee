@@ -1,8 +1,12 @@
+import { OrderList, OrderItem, RAW_CART_KEY  } from '../utils/order-list.js';
+
 export class MenuItemVisualizer {
     constructor(menuItem, menuModel) {
         this.menuItem = menuItem;
         this.menuModel = menuModel;
         this.selectedOptions = new Map();
+        this.orderList = new OrderList();
+        this.orderList.load();
 
         this.initializeSelectedOptions();
     }
@@ -21,36 +25,26 @@ export class MenuItemVisualizer {
     }
 
     addToCart() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const { name, totalPrice } = this.calculateCartDetails();
-
-        cart.push({ id: this.menuItem.id, name, price: totalPrice });
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        alert(`${name} добавлен в корзину`);
-        console.log(localStorage.getItem('cart'));
-    }
-
-    calculateCartDetails() {
-        let name = this.menuItem.name;
-        let totalPrice = this.menuItem.base_price;
-
+        const options = {};
         this.selectedOptions.forEach((selectedOptions, optionName) => {
             if (Array.isArray(selectedOptions)) {
-                selectedOptions.forEach(option => {
-                    if (option.value) {
-                        name += `, ${option.value}`;
-                        totalPrice += option.price_increase;
-                    }
-                });
-            } else if (selectedOptions.value) {
-                name += `, ${selectedOptions.value}`;
-                totalPrice += selectedOptions.price_increase;
+                options[optionName] = selectedOptions.map(option => option.value);
+            } else {
+                options[optionName] = selectedOptions.value;
             }
         });
 
-        return { name, totalPrice };
+        const orderItem = new OrderItem(this.menuItem.item_id, options);
+        this.orderList.addItem(orderItem);
+
+        alert(`${this.menuItem.name} добавлен в корзину`);
+
+        console.log('RAW_CART_KEY');
+        console.log(localStorage.getItem(RAW_CART_KEY));
+        console.log('cart_processed');
+        console.log(localStorage.getItem('cart_processed'));
     }
+
 
     visualize() {
         const menuItem = this.createMenuItemElement();
@@ -123,7 +117,8 @@ export class MenuItemVisualizer {
         optionModel.possible_variants.forEach((variant, index) => {
             const label = document.createElement('label');
             label.innerHTML = `
-                <input type="radio" name="${optionModel.name}" value="${variant.value}" ${index === 0 ? 'checked' : ''}>
+                <input type="radio" name="${optionModel.name}${this.menuItem.item_id}" value="${variant.value}" 
+                    ${index === optionModel.default_variant_index ? 'checked' : ''}>
                 <span>${variant.value}<br>(+${variant.price_increase} ₽)</span>
             `;
             label.querySelector('input').addEventListener('change', (event) => {

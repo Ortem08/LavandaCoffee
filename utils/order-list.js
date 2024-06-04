@@ -1,7 +1,6 @@
 export const RAW_CART_KEY = 'cart';
 const PROCESSED_CART_KEY = "cart_processed";
 
-
 /**
  * can be used to store orders in localStorage
  */
