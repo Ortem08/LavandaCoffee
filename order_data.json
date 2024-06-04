@@ -1,0 +1,89 @@
+{
+    "1": [
+        {
+            "amount": 1,
+            "id": 42,
+            "options": {
+                "volume_tier_small": [
+                    "150 мл"
+                ],
+                "topping": [
+                    "Клюква"
+                ]
+            },
+            "price": 140
+        },
+        {
+            "amount": 1,
+            "id": 42,
+            "options": {
+                "volume_tier_small": [
+                    "150 мл"
+                ],
+                "topping": [
+                    "Клюква",
+                    "Шоколад"
+                ]
+            },
+            "price": 165
+        }
+    ],
+    "2": [
+        {
+            "amount": 1,
+            "id": 42,
+            "options": {
+                "volume_tier_small": [
+                    "150 мл"
+                ],
+                "topping": [
+                    "Клюква"
+                ]
+            },
+            "price": 140
+        },
+        {
+            "amount": 1,
+            "id": 42,
+            "options": {
+                "volume_tier_small": [
+                    "150 мл"
+                ],
+                "topping": [
+                    "Клюква",
+                    "Шоколад"
+                ]
+            },
+            "price": 165
+        }
+    ],
+    "3": [
+        {
+            "amount": 1,
+            "id": 42,
+            "options": {
+                "volume_tier_small": [
+                    "150 мл"
+                ],
+                "topping": [
+                    "Клюква"
+                ]
+            },
+            "price": 140
+        },
+        {
+            "amount": 1,
+            "id": 42,
+            "options": {
+                "volume_tier_small": [
+                    "150 мл"
+                ],
+                "topping": [
+                    "Клюква",
+                    "Шоколад"
+                ]
+            },
+            "price": 165
+        }
+    ]
+}
