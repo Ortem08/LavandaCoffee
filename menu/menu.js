@@ -1,41 +1,36 @@
 import { MenuItemVisualizer } from './menu-item-visualizer.js';
-import { MenuItem, MenuItemOption } from './menu-item.js';
+import { create_menu_model } from '../utils/menu_model.js';
 
-const drinks = [
-    new MenuItem(1, 'Кофе с лавандой фирменный', [
-        new MenuItemOption('100 мл', 150),
-        new MenuItemOption('200 мл', 200)
-    ]),
-    new MenuItem(2, 'Капучино', [
-        new MenuItemOption('200 мл', 200)
-    ]),
-    new MenuItem(5, 'Кофе 3в1', [
-        new MenuItemOption(null, 300)
-    ])
-];
+function splitByType(menuModel) {
+    const drinks = [];
+    const desserts = [];
 
-const desserts = [
-    new MenuItem(3, 'Шоколад', [
-        new MenuItemOption('с клубникой', 200),
-        new MenuItemOption('с лавандой', 250),
-        new MenuItemOption('тёмный', 1000),
-        new MenuItemOption('молочный', 10)
-    ]),
-    new MenuItem(4, 'Чизкейк', [
-        new MenuItemOption('с голубикой', 350)
-    ])
-];
+    menuModel.item_models_map.forEach((item) => {
+        if (item.type === 'drink') {
+            drinks.push(item);
+        } else if (item.type === 'dessert') {
+            desserts.push(item);
+        }
+    });
 
+    return { drinks, desserts };
+}
 
-function generateMenuItems(section, items) {
+function generateMenuItems(section, items, menuModel) {
     const container = document.getElementById(section);
     items.forEach(item => {
-        const visualizer = new MenuItemVisualizer(item);
+        const visualizer = new MenuItemVisualizer(item, menuModel);
         container.appendChild(visualizer.visualize());
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    generateMenuItems('drinks', drinks);
-    generateMenuItems('desserts', desserts);
-});
+async function initializeMenu() {
+    const menuModel = await create_menu_model();
+
+    const { drinks, desserts } = splitByType(menuModel);
+
+    generateMenuItems('drinks', drinks, menuModel);
+    generateMenuItems('desserts', desserts, menuModel);
+}
+
+document.addEventListener('DOMContentLoaded', initializeMenu);
