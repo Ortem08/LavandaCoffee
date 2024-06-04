@@ -30,7 +30,7 @@ export class MenuItemVisualizer {
             if (Array.isArray(selectedOptions)) {
                 options[optionName] = selectedOptions.map(option => option.value);
             } else {
-                options[optionName] = selectedOptions.value;
+                options[optionName] = [ selectedOptions.value ];
             }
         });
 
