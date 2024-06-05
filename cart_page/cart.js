@@ -10,6 +10,8 @@ import { OrderList, RAW_CART_KEY } from '../utils/order-list.js';
 // }
 // a = null;
 
+
+
 create_menu_model().then(
     (menuModel) => {
         const order_list = new OrderList();

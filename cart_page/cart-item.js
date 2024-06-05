@@ -45,7 +45,24 @@ export class CartItemCard{
         const itemCounter = node.querySelector(".item-amount");
         itemCounter.setAttribute('value', String(this.amount));
         itemCounter.addEventListener('input', (ev) => this.onCountChanged(ev));
-        
+        itemCounter.addEventListener('change', (ev) => this.onCountChanged(ev));
+
+
+        const quantityButtons = node.querySelectorAll(".quantity-btn");
+        quantityButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const input = this.parentElement.querySelector('.item-amount');
+                    let value = parseInt(input.value);
+
+                    if (this.getAttribute('data-action') === 'increase') {
+                        value = Math.min(value + 1, 50);
+                    } else if (this.getAttribute('data-action') === 'decrease') {
+                        value = Math.max(value - 1, 1);
+                    }
+                    input.value = value;
+                    input.dispatchEvent(new Event('change'));
+                });
+            });
         node.querySelector('.itemID').setAttribute('value', String(this.itemID));
         node.querySelector('.itemOptions').setAttribute('value', JSON.stringify(this._orderItem.options));
         // console.log(node.querySelector('.itemOptions').getAttribute('value'));
