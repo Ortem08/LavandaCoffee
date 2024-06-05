@@ -11,6 +11,8 @@ if (a.get_all_order_items().length === 0){
 a = null;
 
 
+
+
 create_menu_model().then(
     (menuModel) => {
         const order_list = new OrderList();
