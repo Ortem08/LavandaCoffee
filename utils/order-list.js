@@ -1,7 +1,6 @@
 export const RAW_CART_KEY = 'cart';
 const PROCESSED_CART_KEY = "cart_processed";
 
-
 /**
  * can be used to store orders in localStorage
  */
@@ -67,9 +66,9 @@ export class OrderList{
         const identifier = order_item.stringify_without_count();
         if (this.orderItemsMap.has(identifier)){
             this.orderItemsMap.get(identifier).count += order_item.count;
-            return;
+        } else {
+            this.orderItemsMap.set(identifier, order_item);
         }
-        this.orderItemsMap.set(identifier, order_item);
         this.save();
     }
 

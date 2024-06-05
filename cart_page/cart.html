@@ -6,17 +6,21 @@
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
+    <div class="cart-container">
+    <h1 class="cart-title">ВАШ ЗАКАЗ</h1>
         <form class="cart-form" action="https://fcae-178-46-69-199.ngrok-free.app/send_invoice">
             <template id="item-template">
                 <fieldset class="item-card">
                     <h3>
                         <span class="item-name">coffee on beer</span>
+                        <button type="button" class="quantity-btn" data-action="decrease">-</button>
                         <input type="number" name="item-amount" class="item-amount" min="1" max="50" value="1">
+                        <button type="button" class="quantity-btn" data-action="increase">+</button>
                     </h3>
                     <button type="button" class="remove-button">X</button>
                     <input type="hidden" name="itemID" class="itemID" value="723AFE023">
                     <input type="hidden" name="itemOptions" class="itemOptions" value="{}">
-                    <div>
+                    <div class="total-price">
                         <span>
                             total cost is
                             <span class="multi-item-cost">multi-item-cost $</span>
@@ -28,16 +32,21 @@
                     </div>
                 </fieldset>
             </template>
-            
+
             <div class="item-list"></div>
-            
+
             <label>
                 Ваш тег в телеграмме
-                <input type="text" name="telegram-tag" class="telegram-tag-input" required>
+                <input type="text" name="telegram-tag" class="telegram-tag-input" placeholder="@example" required pattern="^@.+$">
             </label>
 
-            <button type="submit" class="submit-button"> Order </button>
+            <div class="submit-block">
+                <span class="submit-price">300 ₽</span>
+                <button type="submit" class="submit-button"> ЗАКАЗАТЬ </button>
+            </div>
         </form>
+    </div>
     </body>
     <script type="module" src="cart.js"></script>
+
 </html>
