@@ -71,7 +71,9 @@ export class MenuItemVisualizer {
         const menuItem = document.createElement('div');
         menuItem.className = 'menu-item';
         menuItem.innerHTML = `
-            <img class="menu-item-image" src="./menu-image/${this.menuItem.image_name}" alt="${this.menuItem.name}">
+            <div class="photo-holder">
+                <img class="menu-item-image" src="./menu-image/${this.menuItem.image_name}" alt="${this.menuItem.name}">
+            </div>
             <div class="menu-item-details">
                 <p class="menu-item-name">${this.menuItem.name}</p>
                 <div class="options-container"></div>

@@ -36,10 +36,19 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
-.menu-item img {
+.menu-item .photo-holder {
+    width: 88%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.menu-item .photo-holder img {
     width: 100%;
+    display: block;
     border-radius: 10px;
 }
 
