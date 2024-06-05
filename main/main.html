@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <title> Lavanda Coffee </title>
-    <link rel="stylesheet" href="main style.css" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="../header/header.css" />
 </head>
 <body>
     <header>
@@ -11,10 +12,16 @@
             <img src="resources\header background.png" width="100%">
         </div>
         <div id="header-container">
-            <div id="header-logo"></div>
+            <div id="header-logo-container">
+                <a href="" id="header-logo"></a>
+            </div>
             <div id="header-navbar-container">
-                <div id="telegram-login-button-container">
-                    <button id="telegram-login-button">ВОЙТИ ЧЕРЕЗ TELEGRAM</button>
+                <div id="telegram-register-button-container">
+                    <button id="telegram-register-button">
+                        <span>
+                            ЗАРЕГИСТРИРОВАТЬСЯ ЧЕРЕЗ TELEGRAM
+                        </span>
+                    </button>
                 </div>
                 <nav id="header-navbar">
                     <ul>
@@ -31,25 +38,6 @@
                 </nav>
             </div>
         </div>
-        <!-- <div id="telegram-login-button-container">
-            <button id="telegram-login-button">ВОЙТИ ЧЕРЕЗ TELEGRAM</button>
-        </div>
-        <nav id="header-nav">
-            <a href="" id="nav-logo"></a>
-            <div id="navbar-container">
-                <ul id="navbar">
-                    <li class="nav-item menu">
-                        <a href="">МЕНЮ</a>
-                    </li>
-                    <li class="nav-item shops">
-                        <a href="">КОФЕЙНИ</a>
-                    </li>
-                    <li class="nav-item cart">
-                        <a href="">КОРЗИНА</a>
-                    </li>
-                </ul>
-            </div>
-        </nav> -->
     </header>
     <div id="main-container">
         <div>
@@ -85,5 +73,6 @@
             </div>
         </div>
     </footer>
+    <script src="../header/header.js"></script>
 </body>
 </html>

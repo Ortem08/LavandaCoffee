@@ -1,0 +1,73 @@
+body {
+    position: relative;
+    margin: 0px;
+}
+
+header {
+    position: absolute;
+    width: 100%;
+    height: calc(100vw * 0.18);
+    z-index: 1;
+}
+
+#header-background {
+    position: absolute;
+    z-index: -1;
+}
+
+#header-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#header-logo-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 45%;
+}
+
+#header-logo {
+    width: 60%;
+    height: 25%;
+    margin-top: 18%;
+}
+
+#header-navbar-container {
+    width: 55%;
+}
+
+#telegram-register-button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 5%;
+    padding-right: 10%;
+    height: 20%;
+}
+
+#telegram-register-button {
+    border-radius: 50px;
+    width: 40%;
+    height: 80%;
+}
+
+#header-navbar {
+    margin-top: 5%;
+}
+
+#header-navbar ul{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    margin: 0px;
+}
+
+.nav-item a {
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+}
+
+.nav-item a:visited {
+    color: black;
+}
