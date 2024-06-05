@@ -3,13 +3,12 @@ import { create_menu_model, OptionVariant } from '../utils/menu_model.js';
 import { OrderList, RAW_CART_KEY } from '../utils/order-list.js';
 
 
-let a = new OrderList();
-a.load();
+// let a = new OrderList();
+// a.load();
 // if (a.get_all_order_items().length === 0){
 //     fill_in_test_values();
 // }
 // a = null;
-
 
 create_menu_model().then(
     (menuModel) => {

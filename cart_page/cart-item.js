@@ -59,7 +59,7 @@ export class CartItemCard{
         if (amount > MAX_ITEM_AMOUNT || amount < 1){
             return;
         }
-        this._orderItem.count = amount;
+        this._orderItem.count = parseInt(amount);
         this._orderList.setItem(this._orderItem);
         // console.log(amount);
         this.amount = amount;

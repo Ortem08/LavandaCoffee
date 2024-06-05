@@ -1,5 +1,9 @@
 import { MenuItemVisualizer } from './menu-item-visualizer.js';
 import { create_menu_model } from '../utils/menu_model.js';
+import { OrderList } from "../utils/order-list.js";
+
+const ORDER_LIST = new OrderList();
+ORDER_LIST.load();
 
 function splitByType(menuModel) {
     const drinks = [];
@@ -19,7 +23,7 @@ function splitByType(menuModel) {
 function generateMenuItems(section, items, menuModel) {
     const container = document.getElementById(section);
     items.forEach(item => {
-        const visualizer = new MenuItemVisualizer(item, menuModel);
+        const visualizer = new MenuItemVisualizer(item, menuModel, ORDER_LIST);
         container.appendChild(visualizer.visualize());
     });
 }

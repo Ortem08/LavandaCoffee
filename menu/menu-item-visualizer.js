@@ -1,12 +1,11 @@
-import { OrderList, OrderItem, RAW_CART_KEY  } from '../utils/order-list.js';
+import { OrderItem, RAW_CART_KEY  } from '../utils/order-list.js';
 
 export class MenuItemVisualizer {
-    constructor(menuItem, menuModel) {
+    constructor(menuItem, menuModel, orderList) {
         this.menuItem = menuItem;
         this.menuModel = menuModel;
         this.selectedOptions = new Map();
-        this.orderList = new OrderList();
-        this.orderList.load();
+        this.orderList = orderList;
 
         this.initializeSelectedOptions();
     }
