@@ -8,11 +8,12 @@ p {
 
 .menu {
     width: 90%;
-    margin: 0 auto;
+    margin: 100px auto;
     text-align: center;
 }
 
 .menu h1 {
+    font-size: 50px;
     color: #9266CC;
 }
 
@@ -37,6 +38,10 @@ p {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+.menu-item .menu-item-details {
+    width: 90%;
 }
 
 .menu-item .photo-holder {
@@ -64,6 +69,7 @@ p {
 
 .menu-item button:hover {
     background-color: #734DA2;
+    scale: 103%;
 }
 
 .menu-item .menu-item-name {
@@ -74,12 +80,6 @@ p {
 .menu-item .menu-item-price {
     font-size: 20px;
     font-weight: bold;
-}
-
-.menu-item .options-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
 }
 
 .option-container {
@@ -108,16 +108,27 @@ p {
     text-align: center;
 }
 
-.option-container input[type="radio"],
-.option-container input[type="checkbox"] {
+.option-container input[type="radio"] + span,
+.option-container input[type="checkbox"] + span {
     width: 100%;
+    border-radius: 5px;
 }
 
 .option-container input[type="radio"]:checked + span,
 .option-container input[type="checkbox"]:checked + span {
-    width: 100%;
     background-color: #C2AAE4;
-    border-radius: 5px;
+}
+
+.option-container input[type="radio"]:hover + span,
+.option-container input[type="checkbox"]:hover + span {
+    scale: 104%;
+    background-color: white;
+}
+
+.option-container input[type="radio"]:checked:hover + span,
+.option-container input[type="checkbox"]:checked:hover + span {
+    background-color: #ae96d2;
+    scale: 104%;
 }
 
 .option-container input[type="radio"],
