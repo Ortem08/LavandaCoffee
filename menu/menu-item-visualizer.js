@@ -1,4 +1,5 @@
 import { OrderItem, RAW_CART_KEY  } from '../utils/order-list.js';
+import { createNotification } from '../utils/notification/notification-creator.js'
 
 export class MenuItemVisualizer {
     constructor(menuItem, menuModel, orderList) {
@@ -35,7 +36,10 @@ export class MenuItemVisualizer {
 
         const orderItem = new OrderItem(this.menuItem.item_id, options);
         this.orderList.addItem(orderItem);
+
+        createNotification(`Добавлено в корзину.`);
     }
+
 
 
     visualize() {
