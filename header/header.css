@@ -1,12 +1,11 @@
 body {
-    position: relative;
     margin: 0px;
 }
 
 header {
-    position: absolute;
+    position: relative;
     width: 100%;
-    height: calc(100vw * 0.18);
+    height: calc(100vw * 0.12);
     z-index: 1;
 }
 
@@ -24,13 +23,13 @@ header {
 #header-logo-container {
     display: flex;
     justify-content: flex-end;
+    align-items: flex-end;
     width: 45%;
 }
 
 #header-logo {
     width: 60%;
-    height: 25%;
-    margin-top: 18%;
+    height: 35%;
 }
 
 #header-navbar-container {
@@ -42,7 +41,7 @@ header {
     justify-content: flex-end;
     padding-top: 5%;
     padding-right: 10%;
-    height: 20%;
+    height: 30%;
 }
 
 #telegram-register-button {
