@@ -35,13 +35,6 @@ export class MenuItemVisualizer {
 
         const orderItem = new OrderItem(this.menuItem.item_id, options);
         this.orderList.addItem(orderItem);
-
-        alert(`${this.menuItem.name} добавлен в корзину`);
-
-        console.log('RAW_CART_KEY');
-        console.log(localStorage.getItem(RAW_CART_KEY));
-        console.log('cart_processed');
-        console.log(localStorage.getItem('cart_processed'));
     }
 
 
