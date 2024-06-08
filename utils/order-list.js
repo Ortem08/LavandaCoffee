@@ -7,6 +7,7 @@ const PROCESSED_CART_KEY = "cart_processed";
 export class OrderList{
     constructor(){
         this.orderItemsMap = new Map();
+        this.orderCount = 0;
     }
 
     load(){
@@ -42,11 +43,21 @@ export class OrderList{
      * automatically saved, no need in calling this manually (usually)
      */
     save(){
+        this.orderCount = 0;
         const counted_list = [];
         for (let [_, order_item] of this.orderItemsMap){
             counted_list.push(order_item.to_obj());
+            this.orderCount += order_item.count;
         }
         localStorage.setItem(PROCESSED_CART_KEY, JSON.stringify(counted_list));
+
+
+        const event = new CustomEvent('orderListSave', {
+            detail: {
+                orderCount: this.orderCount
+            }
+        });
+        window.dispatchEvent(event);
     }
 
     clear_all(){

@@ -70,3 +70,11 @@ header {
 .nav-item a:visited {
     color: black;
 }
+
+#cart-counter {
+    background-color: #C2AAE4;
+    border-radius: 100px;
+    padding: 5px 10px;
+    font-size: 25px;
+    margin: 10px;
+}
