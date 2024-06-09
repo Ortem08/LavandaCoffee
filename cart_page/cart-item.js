@@ -87,12 +87,21 @@ export class CartItemCard{
         // console.log("deleting");
         this._orderList.removeItem(this._orderItem);
         event.target.closest(".item-card").remove();
+        document.querySelector('.submit-price').textContent = String(- this.cost * this.amount + parseInt(document.querySelector('.submit-price').textContent)) + '₽';
+
     }
 
     updateView(node){
         console.log(node);
         node.querySelector('.amount-of-items-view').textContent = String(this.amount);
         node.querySelector('.one-item-cost').textContent = String(this.cost);
+        let oldAmount = parseInt(document.querySelector('.submit-price').textContent.split(' ')[0])
+        let oldPrice = parseInt(node.querySelector('.multi-item-cost').textContent.split(' ')[0])
+        if (isNaN(oldPrice))
+            oldPrice = 0;
+        let newPrice = this.cost * this.amount
+        console.log(node.querySelector('.multi-item-cost').textContent)
         node.querySelector('.multi-item-cost').textContent = String(this.cost * this.amount);
+        document.querySelector('.submit-price').textContent = String(oldAmount + newPrice - oldPrice) + '₽';
     }
 }
