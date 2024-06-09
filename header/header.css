@@ -1,4 +1,6 @@
 body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
     margin: 0px;
 }
 
@@ -45,9 +47,21 @@ header {
 }
 
 #telegram-register-button {
-    border-radius: 50px;
     width: 40%;
     height: 80%;
+    border-radius: 50px;
+    border-style: none;
+    color: white;
+    background-color: #684738;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#telegram-register-button div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }
 
 #header-navbar {
@@ -69,4 +83,13 @@ header {
 
 .nav-item a:visited {
     color: black;
+}
+
+#cart-nav-item a {
+    display: flex;
+    gap: 5%;
+}
+
+#cart-nav-item a img {
+    height: 30px;
 }

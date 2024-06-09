@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title> Lavanda Coffee </title>
-    <link rel="stylesheet" href="../header/header.css" />
+    <link rel="stylesheet" href="..\header\header.css" />
     <link rel="stylesheet" href="main.css" />
 </head>
 <body>
@@ -13,26 +13,32 @@
         </div>
         <div id="header-container">
             <div id="header-logo-container">
-                <a href="" id="header-logo"></a>
+                <a href="../main/main.html" id="header-logo"></a>
             </div>
             <div id="header-navbar-container">
                 <div id="telegram-register-button-container">
                     <button id="telegram-register-button">
-                        <span>
-                            ЗАРЕГИСТРИРОВАТЬСЯ ЧЕРЕЗ TELEGRAM
-                        </span>
+                        <div>
+                            <span>
+                                ЗАРЕГИСТРИРОВАТЬСЯ
+                            </span>
+                            <img src="../header/resources/icon-telegram.png" alt="telegram-messenger" width="10%">
+                        </div>
                     </button>
                 </div>
                 <nav id="header-navbar">
                     <ul>
                         <li class="nav-item">
-                            <a href="../menu/menu.html">МЕНЮ</a>
+                            <a href="..\menu\menu.html">МЕНЮ</a>
                         </li>
                         <li class="nav-item">
                             <a href="#social-media">КОФЕЙНИ</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="../cart_page/cart.html">КОРЗИНА</a>
+                        <li class="nav-item" id="cart-nav-item">
+                            <a href="..\cart_page\cart.html">
+                                <img src="..\header\resources\icon-shopping-cart.png" alt="cart">
+                                <span>КОРЗИНА</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>
