@@ -1,0 +1,91 @@
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #c0a9e2;
+    padding: 16px;
+    z-index: 100;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification.confirm-submit {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    width: 80%;
+    text-align: center;
+    align-content: center;
+    padding: 50px;
+}
+
+.notification.confirm-submit.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.notification .button-holder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.notification .button-holder button {
+    width: 35%;
+    margin: 5px 5%;
+    background-color: #ded7e8;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 20px;
+    word-wrap: break-word;
+}
+
+.notification .button-holder button:hover {
+    background-color: white;
+    scale: 110%;
+}
+
+.notification img {
+    width: 40%;
+}
+
+.notification .submit-message {
+    text-align: left;
+}
+
+.notification .reminder {
+    font-size: 12px;
+}
+
+
+#redirect-button {
+    width: 80%;
+    font-weight: bold;
+}
+
+@media (max-width: 860px) {
+    .notification.confirm-submit {
+        padding: 25px;
+    }
+
+    .notification .button-holder button {
+        font-size: 12px;
+    }
+}
+
+/*@media (max-width: 570px) {*/
+/*    .notification .button-holder button {*/
+/*        font-size: 8px;*/
+/*    }*/
+/*}*/
