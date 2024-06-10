@@ -1,4 +1,4 @@
-import { createConfirmNotification } from '../utils/notification/notification-creator.js';
+import { createConfirmNotification, createTimeoutNotification } from '../utils/notification/notification-creator.js';
 import { OrderList  } from '../utils/order-list.js';
 
 
@@ -24,6 +24,7 @@ const SUBMIT_MESSAGE = `
 </div>
 `;
 
+
 const submitButton = document
     .getElementsByClassName('submit-button')[0];
 
@@ -34,37 +35,108 @@ const form = document
 let telegramTag = form
     .getElementsByClassName('telegram-tag-input')[0];
 
+telegramTag.addEventListener('change', () => {
+    telegramTag.setCustomValidity("");
+});
+
 const orderList = new OrderList();
+
+checkRegister();
+
+function checkRegister () {
+    const unregisteredString = window.location.href.split('?').slice(1)[0];
+    const unregistered = unregisteredString.slice(13, 17) === 'true';
+
+    if (unregistered) {
+        pointOutErrorsForUnregistered();
+    } else {
+        createNotificationForRegistered();
+    }
+}
+
+function createNotificationForRegistered () {
+    const lastTelegramTag = localStorage.getItem('tagTG');
+    const message =`
+        <div>
+            Счёт на оплату был отправлен в сообщении в
+            <a href="${telegramUrl}">@${botUsername}</a> 
+            пользователю ${lastTelegramTag}!
+        </div>
+    `;
+    createTimeoutNotification(
+        message,
+        'for-registered',
+        10000
+    )
+
+    localStorage.removeItem('tagTG');
+    localStorage.removeItem('last_order');
+}
+
+function pointOutErrorsForUnregistered () {
+    const lastTelegramTag = localStorage.getItem('tagTG');
+    const lastOrder = localStorage.getItem('last_order');
+
+    if (!(lastTelegramTag && lastOrder)) {
+        return;
+    }
+
+    localStorage.setItem(
+        "cart_processed",
+        lastOrder
+    );
+
+    telegramTag.value = lastTelegramTag;
+    telegramTag.setCustomValidity("Пользователь с таким тегом не зарегистрирован");
+    form.reportValidity();
+}
 
 
 function submitForm() {
-    if (!(form.checkValidity() && checkFormSubmit())) {
+    if (form.checkValidity()) {
+        localStorage.setItem(
+            'tagTG', telegramTag.value
+        );
+        localStorage.setItem(
+            "last_order",
+            localStorage.getItem("cart_processed")
+        );
+
+        form.submit();
+        orderList.clear_all();
+    } else {
         form.reportValidity();
-        console.log("Форма не была отправлена");
-        return;
     }
-    console.log("Форма успешно отправлена");
-    // orderList.clear_all();
 }
 
+// function submitForm() {
+//     if (!(form.checkValidity() && checkFormSubmit())) {
+//         form.reportValidity();
+//         console.log("Форма не была отправлена");
+//         return;
+//     }
+//     console.log("Форма успешно отправлена");
+//     // orderList.clear_all();
+// }
 
-function checkFormSubmit() {
-    let isStatus400 = false;
 
-    fetch(form.action, {
-        method: form.method,
-        headers: _getFormHeaders(),
-        // mode: 'no-cors'
-    }).then(response => {
-        console.log(`Статус ответа: ${response.status}.`)
-        if (response.status === 400) {
-            telegramTag.setCustomValidity("Пользователь с таким тегом не зарегистрирован");
-            isStatus400 = true;
-        }
-    });
-
-    return !isStatus400;
-}
+// function checkFormSubmit() {
+//     let isStatus400 = false;
+//
+//     fetch(form.action, {
+//         method: form.method,
+//         headers: _getFormHeaders(),
+//         // mode: 'no-cors'
+//     }).then(response => {
+//         console.log(`Статус ответа: ${response.status}.`)
+//         if (response.status === 400) {
+//             telegramTag.setCustomValidity("Пользователь с таким тегом не зарегистрирован");
+//             isStatus400 = true;
+//         }
+//     });
+//
+//     return !isStatus400;
+// }
 
 function createSubmitNotification (event) {
     event.preventDefault();

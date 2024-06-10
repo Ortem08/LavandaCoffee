@@ -1,11 +1,11 @@
 const LIFE_TIMEOUT = 2000;
 const REMOVE_TIMEOUT = 300;
 
-export function createTimeoutNotification(message, notificationType) {
+export function createTimeoutNotification(message, notificationType, lifeTimeout = LIFE_TIMEOUT) {
     const notification = createNotification(message, notificationType);
 
     setTimeout(() => removeNotification(notification),
-        LIFE_TIMEOUT);
+        lifeTimeout);
 
     return notification;
 }
