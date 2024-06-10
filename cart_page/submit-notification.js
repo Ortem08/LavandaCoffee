@@ -40,32 +40,30 @@ const orderList = new OrderList();
 function submitForm() {
     if (!(form.checkValidity() && checkFormSubmit())) {
         form.reportValidity();
-        console.error("Ошибка при отправке формы!");
+        console.log("Форма не была отправлена");
         return;
     }
     console.log("Форма успешно отправлена");
-    orderList.clear_all();
+    // orderList.clear_all();
 }
 
 
 function checkFormSubmit() {
-    let formData = new FormData(form);
+    let isStatus400 = false;
 
     fetch(form.action, {
         method: form.method,
-        body: formData,
+        headers: _getFormHeaders(),
+        // mode: 'no-cors'
     }).then(response => {
-        console.log(response.url);
-        console.log(response.status, response.statusText);
-        console.log(response.body);
-        console.log(response.headers);
+        console.log(`Статус ответа: ${response.status}.`)
         if (response.status === 400) {
             telegramTag.setCustomValidity("Пользователь с таким тегом не зарегистрирован");
-            return false;
+            isStatus400 = true;
         }
     });
 
-    return true;
+    return !isStatus400;
 }
 
 function createSubmitNotification (event) {
@@ -73,9 +71,6 @@ function createSubmitNotification (event) {
 
     const submitNotification = document.getElementsByClassName('confirm-submit') [0];
     if (submitNotification) {
-        console.log(submitNotification);
-        console.log("УЖЕ ЕСТЬ");
-
         return;
     }
 
@@ -119,4 +114,17 @@ function _createNotificationButtons () {
 function _appendNotificationElements (notification, redirectButton, denyButton) {
     const buttonHolder = notification.getElementsByClassName('button-holder')[0];
     buttonHolder.insertBefore(redirectButton, denyButton);
+}
+
+function _getFormHeaders () {
+    const formHeaders = new Headers();
+    Array.from(form.elements)
+        .forEach((element) => {
+            const { name, value } = element;
+            if (!!name){
+                // console.log(name, value);
+                formHeaders.append(encodeURI(name), encodeURI(value));
+            }
+        });
+    return formHeaders;
 }
