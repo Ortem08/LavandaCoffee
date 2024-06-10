@@ -19,6 +19,8 @@ create_menu_model().then(
         for (const order_item of order_list.get_all_order_items()){
             addItemToItemList(new CartItemCard(order_item, menuModel, order_list));
         }
+
+        window.dispatchEvent(new CustomEvent('cartLoad'));
     }
 );
 

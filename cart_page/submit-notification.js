@@ -1,4 +1,4 @@
-import { createConfirmNotification } from '../utils/notification/notification-creator.js'
+import { createConfirmNotification } from '../utils/notification/notification-creator.js';
 import { OrderList  } from '../utils/order-list.js';
 
 
