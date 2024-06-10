@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, jsonify
+from flask import Flask, request, redirect, jsonify, render_template_string
 from telegram import LabeledPrice, Bot, Update
 from telegram.ext import (
     Application,
@@ -13,7 +13,13 @@ import json
 import os
 import logging
 from werkzeug.datastructures import ImmutableMultiDict, MultiDict
-
+import hashlib
+import qrcode
+import random
+import string
+from datetime import datetime, timedelta
+from threading import Thread
+import time
 
 logging.basicConfig(level=logging.INFO)
 
@@ -30,7 +36,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 user_data_file = os.path.join(script_dir, 'user_data.json')
 order_data_file = os.path.join(script_dir, 'order_data.json')
 menu_file = os.path.join(script_dir, 'menu/menu_list_map.json')
-
+keys_data_file = os.path.join(script_dir, 'keys_data.json')
 
 class OrderItem:
     def __init__(self, amount, id, options, price):
@@ -93,6 +99,7 @@ def dict_to_order_items(data):
 
 user_to_id = load_data(user_data_file)
 order_storage = {k: dict_to_order_items(v) for k, v in load_data(order_data_file).items()}
+keys_storage = load_data(keys_data_file)
 
 
 def get_item_by_id(item_id):
@@ -120,7 +127,48 @@ def calculate_price(base_price, options):
     return total_price
 
 
+def generate_keys():
+    public_key = random.choice(string.ascii_uppercase) + ''.join(random.choices(string.digits, k=3))
+    private_key = hashlib.sha256(os.urandom(32)).hexdigest()
+    return public_key, private_key
+
+
+def save_keys(public_key, private_key):
+    expiration_time = datetime.now() + timedelta(hours=1)
+    keys_storage[public_key] = {'private_key': private_key, 'expires_at': expiration_time.isoformat(), 'status': 'pending'}
+    save_data(keys_data_file, keys_storage)
+
+
+def cleanup_expired_keys():
+    now = datetime.now()
+    keys_storage = {k: v for k, v in keys_storage.items() if datetime.fromisoformat(v['expires_at']) > now}
+    save_data(keys_data_file, keys_storage)
+
+
+def generate_qr_code(data):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    return img
+
+
+async def mark_order_ready(public_key, chat_id):
+    await asyncio.sleep(random.randint(10, 20))
+    if public_key in keys_storage:
+        keys_storage[public_key]['status'] = 'ready'
+        save_data(keys_data_file, keys_storage)
+        logging.info(f"Order {public_key} is now ready.")
+        await bot.send_message(chat_id, f'Ваш заказ с публичным ключом {public_key} готов!')
+
+
 async def send_invoice(chat_id, order_items):
+    cleanup_expired_keys()
     title = 'Счет за заказ'
     description = '\n'.join([f'{item.amount}x {get_item_by_id(item.id)["name"]} - {item.price} RUB' for item in order_items])
     payload = str(len(order_storage) + 1)
@@ -181,11 +229,9 @@ def webhook_handler():
 
     if chat_id:
         asyncio.run_coroutine_threadsafe(send_invoice(chat_id, order_items_list), loop)
-        bot_username = 'LavandaCoffee_bot'
-        telegram_url = f'tg://resolve?domain={bot_username}'
-        return redirect(telegram_url)
+        return redirect("http://xyztest123.ru.swtest.ru/cart_page/cart.html?unregistered=false")
 
-    return jsonify({'error': 'User not registered'}), 400
+    return redirect("http://xyztest123.ru.swtest.ru/cart_page/cart.html?unregistered=true")
 
 
 async def pre_checkout_callback(update, context):
@@ -239,7 +285,24 @@ async def pre_checkout_callback(update, context):
 
 
 async def successful_payment_callback(update, context):
-    await context.bot.send_message(update.message.chat_id, 'Успешно купили')
+    payload = update.message.successful_payment.invoice_payload
+
+    # Получение публичного и приватного ключей
+    public_key, private_key = generate_keys()
+    save_keys(public_key, private_key)
+
+    # Генерация QR-кода с приватным ключом
+    qr_code_img = generate_qr_code(private_key)
+    qr_code_path = os.path.join(script_dir, f'qr_{public_key}.png')
+    qr_code_img.save(qr_code_path)
+
+    # Отправка публичного ключа и QR-кода пользователю
+    chat_id = update.message.chat_id
+    await context.bot.send_message(chat_id, f'Ваш публичный ключ: {public_key}')
+    await context.bot.send_photo(chat_id, photo=open(qr_code_path, 'rb'))
+
+    # Эмуляция готовности заказа
+    asyncio.create_task(mark_order_ready(public_key, chat_id))
 
 
 async def start(update, context):
@@ -253,12 +316,52 @@ async def start(update, context):
         await update.message.reply_text('У вас нет username. Пожалуйста, установите его в настройках Telegram.')
 
 
+async def handle_qr_code(update, context):
+    if not update.message.photo:
+        await update.message.reply_text('Пожалуйста, отправьте QR-код.')
+        return
+
+    # Получение QR-кода и извлечение данных
+    file_id = update.message.photo[-1].file_id
+    new_file = await context.bot.get_file(file_id)
+    file_path = os.path.join(script_dir, f'{file_id}.jpg')
+    await new_file.download_to_drive(file_path)
+
+    # Чтение QR-кода
+    from PIL import Image
+    import cv2
+    import numpy as np
+
+    img = Image.open(file_path)
+    cv_img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    detector = cv2.QRCodeDetector()
+    data, _, _ = detector.detectAndDecode(cv_img)
+
+    if not data:
+        await update.message.reply_text('Не удалось прочитать QR-код.')
+        return
+
+    # Проверка приватного ключа
+    for public_key, key_data in keys_storage.items():
+        if key_data['private_key'] == data:
+            if key_data['status'] == 'ready':
+                key_data['status'] = 'received'
+                save_data(keys_data_file, keys_storage)
+                await update.message.reply_text(f'Заказ с публичным ключом {public_key} получен!')
+                return
+            else:
+                await update.message.reply_text(f'Заказ с публичным ключом {public_key} не готов или уже получен.')
+                return
+
+    await update.message.reply_text('Неверный QR-код.')
+
+
 def main():
     application.add_handler(PreCheckoutQueryHandler(pre_checkout_callback))
     application.add_handler(MessageHandler(filters.SUCCESSFUL_PAYMENT, successful_payment_callback))
     application.add_handler(CommandHandler("start", start))
+    application.add_handler(MessageHandler(filters.PHOTO, handle_qr_code))
 
-    from threading import Thread
     flask_thread = Thread(target=lambda: app.run(port=5000))
     flask_thread.start()
 
