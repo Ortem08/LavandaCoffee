@@ -1,0 +1,154 @@
+* {
+    font-family: Arial, sans-serif;
+}
+
+p {
+    font-size: 18px;
+}
+
+.menu {
+    width: 90%;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.menu h1 {
+    font-size: 50px;
+    color: #9266CC;
+}
+
+.menu-section * {
+    color: #401815;
+}
+
+.menu-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.menu-item {
+    border: none;
+    border-radius: 20px;
+    margin: 20px;
+    padding: 20px 20px;
+    width: calc(33% - 40px);
+    background-color: #FAEEE4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-item .menu-item-details {
+    width: 90%;
+}
+
+.menu-item .photo-holder {
+    width: 88%;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.menu-item .photo-holder img {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+}
+
+.menu-item button {
+    background-color: #C2AAE4;
+    color: black;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.menu-item button:hover {
+    background-color: #734DA2;
+    scale: 103%;
+}
+
+.menu-item .menu-item-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.menu-item .menu-item-price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.option-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.option-container.horizontal {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.option-container.horizontal label {
+    width: 100%;
+}
+
+.option-container label {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-direction: column;
+    text-align: center;
+}
+
+.option-container input[type="radio"] + span,
+.option-container input[type="checkbox"] + span {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.option-container input[type="radio"]:checked + span,
+.option-container input[type="checkbox"]:checked + span {
+    background-color: #C2AAE4;
+}
+
+.option-container input[type="radio"]:hover + span,
+.option-container input[type="checkbox"]:hover + span {
+    scale: 104%;
+    background-color: white;
+}
+
+.option-container input[type="radio"]:checked:hover + span,
+.option-container input[type="checkbox"]:checked:hover + span {
+    background-color: #ae96d2;
+    scale: 104%;
+}
+
+.option-container input[type="radio"],
+.option-container input[type="checkbox"] {
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    .menu-item {
+        width: calc(50% - 40px);
+    }
+}
+
+@media (max-width: 600px) {
+    .menu-item {
+        width: calc(100% - 40px);
+    }
+}
+
+/*@media (max-height: 500px) {*/
+/*    .menu-item {*/
+/*        width: calc(50% - 40px);*/
+/*    }*/
+/*}*/
