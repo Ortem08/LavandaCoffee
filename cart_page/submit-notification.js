@@ -31,16 +31,41 @@ submitButton.addEventListener('click', createSubmitNotification);
 
 const form = document
     .getElementsByClassName('cart-form')[0];
+let telegramTag = form
+    .getElementsByClassName('telegram-tag-input')[0];
 
 const orderList = new OrderList();
 
+
 function submitForm() {
-    if (form.checkValidity()) {
-        form.submit();
-        orderList.clear_all();
-    } else {
+    if (!(form.checkValidity() && checkFormSubmit())) {
         form.reportValidity();
+        console.error("Ошибка при отправке формы!");
+        return;
     }
+    console.log("Форма успешно отправлена");
+    orderList.clear_all();
+}
+
+
+function checkFormSubmit() {
+    let formData = new FormData(form);
+
+    fetch(form.action, {
+        method: form.method,
+        body: formData,
+    }).then(response => {
+        console.log(response.url);
+        console.log(response.status, response.statusText);
+        console.log(response.body);
+        console.log(response.headers);
+        if (response.status === 400) {
+            telegramTag.setCustomValidity("Пользователь с таким тегом не зарегистрирован");
+            return false;
+        }
+    });
+
+    return true;
 }
 
 function createSubmitNotification (event) {
