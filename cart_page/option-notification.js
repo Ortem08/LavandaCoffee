@@ -21,7 +21,12 @@ function onCartLoaded () {
                 .map(([_, values]) => values.join(', '))
                 .join(', ');
 
-            createTimeoutNotification(`Выбранные опции: ${optionsString}`);
+            if (optionsString.length !== 0){
+                createTimeoutNotification(`Выбранные опции: ${optionsString}.`);
+            }
+            else {
+                createTimeoutNotification(`Нет выбранных опций.`);
+            }
         });
     }
 }
