@@ -1,5 +1,14 @@
+header {
+    margin: 0px;
+}
+
+#main-navbar-container {
+    margin-top: 50px;
+}
+
 #main-container {
     position: relative;
+    background-color: white;
 }
 
 #menu-info {
