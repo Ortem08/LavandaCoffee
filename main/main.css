@@ -9,22 +9,36 @@ header {
 #main-container {
     position: relative;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #menu-info {
     position: absolute;
-    right: 5%;
-    bottom: 15%;
+    right: 3%;
+    bottom: 8%;
+
+    padding: 5% 0%;
     width: 50%;
     text-align: center;
 }
 
 #menu-info article {
     font-size: 25px;
-    margin: 5% 20%;
+    margin: 5% 15%;
 }
 
-#view-menu-button {
+#menu-info a {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    background: rgb(130,98,171);
+    background: linear-gradient(180deg, rgba(130,98,171,1) 0%, rgba(218,204,235,1) 100%);
+
+    padding-top: 25px;
     width: 250px;
     height: 50px;
     border-radius: 50px;
@@ -73,4 +87,13 @@ footer .brand-info {
 footer .policy {
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 1000px) {
+    #menu-info {
+        position: static;
+
+        width: 90%;
+        margin: 5% 0%;
+    }
 }
