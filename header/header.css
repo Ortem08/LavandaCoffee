@@ -138,7 +138,7 @@ nav ul{
 
     header {
         width: auto;
-        height: 100px;
+        height: calc(840px * 0.12);
         margin-bottom: 50px;
     }
 
@@ -153,11 +153,11 @@ nav ul{
     }
 
     #header-logo-container {
-        min-width: 370px;
+        min-width: 360px;
     }
 
     #header-navbar-container {
-        padding-right: 5%;
+        padding-right: 3%;
     }
 
     #telegram-register-button-container {
@@ -193,6 +193,10 @@ nav ul{
 }
 
 @media (max-width: 680px) {
+    #header-navbar-container {
+        margin-left: 10px;
+    }
+
     #telegram-register-button span {
         display: none;
     }
@@ -212,4 +216,19 @@ nav ul{
     /* #main-container {
         display: none;
     } */
+}
+
+@media (max-width: 450px) {
+    header {
+        height: calc(840 * 0.12 / 450 * 100vw);
+        width: 100%;
+    }
+
+    #header-background img {
+        height: calc(150 / 450 * 100vw);
+    }
+
+    #header-logo-container {
+        min-width: calc(360 / 450 * 100vw);
+    }
 }
