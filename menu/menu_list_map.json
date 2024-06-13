@@ -6,7 +6,7 @@
             "type" : "drink",
             "image_name" : "branded_lavender_coffee.png",
             "base_price" : 100,
-            "available_options" : ["volume_tier_small"]
+            "available_options" : ["volume_tier_small", "syrup"]
         },
         {
             "id" : 222,
@@ -14,7 +14,7 @@
             "type" : "drink",
             "image_name" : "cappuccino.png",
             "base_price" : 100,
-            "available_options" : ["volume_tier_medium"]
+            "available_options" : ["volume_tier_medium", "syrup"]
         },
         {
             "id" : 3456789,
@@ -30,7 +30,7 @@
             "type" : "drink",
             "image_name" : "espresso.jpg",
             "base_price" : 100,
-            "available_options" : ["volume_tier_small"]
+            "available_options" : ["volume_tier_small", "syrup"]
         },
         {
             "id" : 2,
@@ -38,7 +38,7 @@
             "type" : "drink",
             "image_name" : "latte.jpg",
             "base_price" : 130,
-            "available_options" : ["volume_tier_medium"]
+            "available_options" : ["volume_tier_medium", "syrup"]
         },
         {
             "id" : 3,
@@ -98,6 +98,23 @@
                 {
                     "value" : "600 мл",
                     "price_increase" : 150
+                }
+            ]
+        },
+        "syrup" : {
+            "multichoice" : true,
+            "variants" : [
+                {
+                    "value" : "Малиновый сироп",
+                    "price_increase" : 30
+                },
+                {
+                    "value" : "Ванильный сироп",
+                    "price_increase" : 30
+                },
+                {
+                    "value" : "сироп Лесной орех",
+                    "price_increase" : 30
                 }
             ]
         },
