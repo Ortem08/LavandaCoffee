@@ -5,8 +5,8 @@ document
     .getElementById('telegram-register-button')
     .addEventListener('click', redirectToTelegramBot);
 
-const cartCounter = document
-    .getElementById('cart-counter');
+const cartCounters = document
+    .querySelectorAll('.cart-counter');
 
 initOrderCount();
 window.addEventListener('orderListSave', changeOrderCount);
@@ -18,12 +18,12 @@ function redirectToTelegramBot() {
 }
 
 function changeOrderCount (event) {
-    cartCounter.textContent = event.detail.orderCount;
+    cartCounters.forEach(c => c.textContent = event.detail.orderCount);
 }
 
 function initOrderCount () {
     const orderList = new OrderList();
     orderList.load();
 
-    cartCounter.textContent = orderList.orderCount;
+    cartCounters.forEach(c => c.textContent = orderList.orderCount);
 }

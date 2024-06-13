@@ -69,7 +69,11 @@ header {
 }
 
 #header-navbar {
-    margin-top: 5%;
+    margin-top: 4%;
+}
+
+nav ul{
+    list-style: none;
 }
 
 #header-navbar ul{
@@ -92,19 +96,19 @@ header {
 
 #cart-nav-item a {
     display: flex;
-    gap: 5%;
+    gap: 7px;
 }
 
 #cart-nav-item a img {
     height: 30px;
 }
 
-#cart-counter {
+.cart-counter {
     background-color: #C2AAE4;
     border-radius: 100px;
-    padding: 5px 10px;
+    padding: 2px 10px;
     font-size: 25px;
-    margin: 10px;
+    margin: 0px 1px;
 }
 
 #nav-menu-btn {
