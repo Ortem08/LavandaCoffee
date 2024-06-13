@@ -4,7 +4,7 @@
             "id" : 111,
             "name" : "Кофе с лавандой фирменный",
             "type" : "drink",
-            "image_name" : "skjdhsldjkf",
+            "image_name" : "branded_lavender_coffee.png",
             "base_price" : 100,
             "available_options" : ["volume_tier_small"]
         },
@@ -12,25 +12,57 @@
             "id" : 222,
             "name" : "Капучино",
             "type" : "drink",
-            "image_name" : "kkkkk",
+            "image_name" : "cappuccino.png",
             "base_price" : 100,
-            "available_options" : []
+            "available_options" : ["volume_tier_medium"]
         },
         {
             "id" : 3456789,
             "name" : "Чизкейк",
             "type" : "dessert",
-            "image_name" : "skjdhsldjooooooooooooo",
+            "image_name" : "cheesecake.png",
             "base_price" : 100,
             "available_options" : ["topping"]
         },
         {
-            "id" : 42,
-            "name" : "The Answer to the Ultimate Question of Life, the Universe, and Everything",
-            "type" : "dessert",
-            "image_name" : "Answer_to_Life.png",
+            "id" : 1,
+            "name" : "Эспрессо",
+            "type" : "drink",
+            "image_name" : "espresso.jpg",
             "base_price" : 100,
-            "available_options" : ["volume_tier_small", "topping"]
+            "available_options" : ["volume_tier_small"]
+        },
+        {
+            "id" : 2,
+            "name" : "Латте",
+            "type" : "drink",
+            "image_name" : "latte.jpg",
+            "base_price" : 130,
+            "available_options" : ["volume_tier_medium"]
+        },
+        {
+            "id" : 3,
+            "name" : "Булочка с корицей",
+            "type" : "dessert",
+            "image_name" : "cinnamon_bun.jpg",
+            "base_price" : 80,
+            "available_options" : []
+        },
+        {
+            "id" : 4,
+            "name" : "Пончик классический",
+            "type" : "dessert",
+            "image_name" : "donut_classic.jpg",
+            "base_price" : 90,
+            "available_options" : []
+        },
+        {
+            "id" : 5,
+            "name" : "Пончик с глазурью",
+            "type" : "dessert",
+            "image_name" : "glazed_donut.jpg",
+            "base_price" : 110,
+            "available_options" : []
         }
     ],
 
