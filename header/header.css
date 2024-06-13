@@ -231,4 +231,13 @@ nav ul{
     #header-logo-container {
         min-width: calc(360 / 450 * 100vw);
     }
+
+    #telegram-register-button-container {
+        padding-top: calc(30 / 450 * 100vw);
+    }
+
+    #telegram-register-button {
+        width: 100%;
+        padding: 0px;
+    }
 }
