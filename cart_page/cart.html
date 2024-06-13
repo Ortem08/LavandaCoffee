@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
     <head>
         <meta charset="UTF-8" />
         <title> Корзина </title>
         <link rel="stylesheet" href="../header/header.css" />
         <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="../utils/notification/notification.css">
     </head>
     <body>
     <header>
@@ -42,21 +43,23 @@
     </header>
     <div class="cart-container">
     <h1 class="cart-title">ВАШ ЗАКАЗ</h1>
-        <form class="cart-form" action="https://8466-178-46-66-39.ngrok-free.app/send_invoice">
+        <form class="cart-form" action="https://5b97-178-46-66-39.ngrok-free.app/send_invoice">
             <template id="item-template">
                 <fieldset class="item-card">
                     <h3>
                         <span class="item-name">coffee on beer</span>
-                        <button type="button" class="quantity-btn" data-action="decrease">-</button>
-                        <input type="number" name="item-amount" class="item-amount" min="1" max="50" value="1">
-                        <button type="button" class="quantity-btn" data-action="increase">+</button>
+                        <div class="item-amount-container">
+                            <button type="button" class="quantity-btn" data-action="decrease">-</button>
+                            <input type="number" name="item-amount" class="item-amount" min="1" max="50" value="1">
+                            <button type="button" class="quantity-btn" data-action="increase">+</button>
+                        </div>
                     </h3>
                     <button type="button" class="remove-button">X</button>
                     <input type="hidden" name="itemID" class="itemID" value="723AFE023">
                     <input type="hidden" name="itemOptions" class="itemOptions" value="{}">
                     <div class="total-price">
                         <span>
-                            total cost is
+                            <!--total cost is-->
                             <span class="multi-item-cost">multi-item-cost $</span>
                             =
                             <span class="one-item-cost">one-item-cost $</span>
@@ -64,6 +67,7 @@
                             <span class="amount-of-items-view">item-amount</span>
                         </span>
                     </div>
+                    <button class="item-options">?</button>
                 </fieldset>
             </template>
 
@@ -76,11 +80,13 @@
 
             <div class="submit-block">
                 <span class="submit-price">0 ₽</span>
-                <button type="submit" class="submit-button"> ЗАКАЗАТЬ </button>
+                <button class="submit-button"> ЗАКАЗАТЬ </button>
             </div>
         </form>
     </div>
     </body>
-    <script type="module" src="cart.js"></script>
+    <script type="module" src="submit-notification.js"></script>
+    <script type="module" src="option-notification.js"></script>
     <script type="module" src="../header/header.js"></script>
+    <script type="module" src="cart.js"></script>
 </html>
