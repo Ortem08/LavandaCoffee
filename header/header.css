@@ -163,6 +163,7 @@ nav ul{
     #telegram-register-button-container {
         padding-top: 30px;
         padding-right: 0px;
+        height: 40px;
     }
 
     #header-navbar {
@@ -171,7 +172,7 @@ nav ul{
         margin-top: 5px;
     }
 
-    #header-navbar ul{
+    #header-navbar {
         display: none;
     }
 
@@ -219,6 +220,10 @@ nav ul{
 }
 
 @media (max-width: 450px) {
+    body {
+        min-width: 350px;
+    }
+
     header {
         height: calc(840 * 0.12 / 450 * 100vw);
         width: 100%;
@@ -238,6 +243,7 @@ nav ul{
 
     #telegram-register-button {
         width: 100%;
+        height: calc(40 / 450 * 100vw);
         padding: 0px;
     }
 }
