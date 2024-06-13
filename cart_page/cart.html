@@ -10,37 +10,62 @@
     <body>
     <header>
         <div id="header-background">
-            <img src="..\header\resources\header background.png" width="100%">
+            <img src="..\header\resources\header background.png">
         </div>
         <div id="header-container">
             <div id="header-logo-container">
-                <a href="" id="header-logo"></a>
+                <a href="../main/main.html" id="header-logo"></a>
             </div>
             <div id="header-navbar-container">
                 <div id="telegram-register-button-container">
                     <button id="telegram-register-button">
-                        <span>
-                            ЗАРЕГИСТРИРОВАТЬСЯ ЧЕРЕЗ TELEGRAM
-                        </span>
+                        <div>
+                            <span>
+                                ЗАРЕГИСТРИРОВАТЬСЯ
+                            </span>
+                            <img src="../header/resources/icon-telegram.png" alt="telegram-messenger" width="10%">
+                        </div>
                     </button>
                 </div>
                 <nav id="header-navbar">
                     <ul>
                         <li class="nav-item">
-                            <a href="../menu/menu.html">МЕНЮ</a>
+                            <a href="..\menu\menu.html">МЕНЮ</a>
                         </li>
                         <li class="nav-item">
-                            <a href="../main/main.html#social-media">КОФЕЙНИ</a>
+                            <a href="#social-media">КОФЕЙНИ</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="../cart_page/cart.html">КОРЗИНА</a>
-                            <span id="cart-counter">0</span>
+                        <li class="nav-item" id="cart-nav-item">
+                            <a href="..\cart_page\cart.html">
+                                <img src="..\header\resources\icon-shopping-cart.png" alt="cart">
+                                <span>КОРЗИНА</span>
+                            </a>
                         </li>
                     </ul>
+                    <!-- <button id="nav-menu-btn">
+                        <img src="../header/resources/icon-nav-menu.png" alt="navigation menu">
+                    </button> -->
                 </nav>
             </div>
         </div>
     </header>
+    <div id="main-navbar-container">
+        <ul>
+            <li class="nav-item">
+                <a href="..\menu\menu.html">МЕНЮ</a>
+            </li>
+            <li class="nav-item">
+                <a href="#social-media">КОФЕЙНИ</a>
+            </li>
+            <li class="nav-item" id="cart-nav-item">
+                <a href="..\cart_page\cart.html">
+                    <!-- <img src="..\header\resources\icon-shopping-cart.png" alt="cart"> -->
+                    <span>КОРЗИНА</span>
+                </a>
+            </li>
+        </ul>
+        <hr>
+    </div>
     <div class="cart-container">
     <h1 class="cart-title">ВАШ ЗАКАЗ</h1>
         <form class="cart-form" action="https://5b97-178-46-66-39.ngrok-free.app/send_invoice">

@@ -1,4 +1,5 @@
 body {
+    font-family: Arial, sans-serif;
     margin: 0px;
 }
 
@@ -12,6 +13,10 @@ header {
 #header-background {
     position: absolute;
     z-index: -1;
+}
+
+#header-background img {
+    width: 100%;
 }
 
 #header-container {
@@ -45,9 +50,22 @@ header {
 }
 
 #telegram-register-button {
+    width: 270px;
+    height: 100%;
     border-radius: 50px;
-    width: 40%;
-    height: 80%;
+    border-style: none;
+    color: white;
+    background-color: #684738;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#telegram-register-button div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }
 
 #header-navbar {
@@ -59,6 +77,7 @@ header {
     justify-content: space-around;
     list-style: none;
     margin: 0px;
+    padding: 0px;
 }
 
 .nav-item a {
@@ -71,10 +90,122 @@ header {
     color: black;
 }
 
+#cart-nav-item a {
+    display: flex;
+    gap: 5%;
+}
+
+#cart-nav-item a img {
+    height: 30px;
+}
+
 #cart-counter {
     background-color: #C2AAE4;
     border-radius: 100px;
     padding: 5px 10px;
     font-size: 25px;
     margin: 10px;
+}
+
+#nav-menu-btn {
+    display: none;
+}
+
+#main-navbar-container {
+    display: none;
+    padding-top: 5px;
+/* 
+    background: rgb(130,98,171);
+    background: linear-gradient(180deg, rgba(130,98,171,1) 0%, rgba(218,204,235,1) 100%); */
+}
+
+#main-navbar-container .nav-item {
+    margin-top: 20px;
+}
+
+#main-navbar-container hr {
+    border-style: none;
+    margin: 0px;
+    height: 2px;
+    background: black;
+}
+
+@media (max-width: 840px) {
+
+    header {
+        width: auto;
+        height: 100px;
+        margin-bottom: 50px;
+    }
+
+    #header-background img{
+        width: auto;
+        height: 150px;
+    }
+
+    #header-background {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    #header-logo-container {
+        min-width: 370px;
+    }
+
+    #header-navbar-container {
+        padding-right: 5%;
+    }
+
+    #telegram-register-button-container {
+        padding-top: 30px;
+        padding-right: 0px;
+    }
+
+    #header-navbar {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 5px;
+    }
+
+    #header-navbar ul{
+        display: none;
+    }
+
+    #nav-menu-btn {
+        display: block;
+        width: 30px;
+        height: 30px;
+        padding: 0px;
+        border-style: none;
+    }
+
+    #nav-menu-btn img {
+        width: 100%;
+    }
+
+    #main-navbar-container {
+        display: block;
+    }
+}
+
+@media (max-width: 680px) {
+    #telegram-register-button span {
+        display: none;
+    }
+
+    #telegram-register-button {
+        width: 50px;
+    }
+
+    #telegram-register-button img {
+        width: 50%;
+    }
+
+    /* #main-navbar-container {
+        display: block;
+    } */
+
+    /* #main-container {
+        display: none;
+    } */
 }
