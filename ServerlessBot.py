@@ -7,10 +7,9 @@ import string
 import qrcode
 import cv2
 import numpy as np
-from PIL import Image
-from datetime import datetime, timedelta
-from io import BytesIO
 import ydb.iam
+from PIL import Image
+from io import BytesIO
 from telegram import LabeledPrice, Bot, Update
 from telegram.ext import (
     Application,
@@ -21,9 +20,9 @@ from telegram.ext import (
     filters,
 )
 
-TOKEN = "7106122843:AAEFkPrGsz1ge_AREhqZb5s5wNdDbffgyLk"
-YDB_DATABASE = "/ru-central1/b1g0nbtusphe5n0v4qoc/etnqsnmib4fic0cfk73r"
-YDB_ENDPOINT = "grpcs://ydb.serverless.yandexcloud.net:2135"
+TOKEN = os.getenv("TOKEN")
+YDB_DATABASE = os.getenv("YDB_DATABASE")
+YDB_ENDPOINT = os.getenv("YDB_ENDPOINT")
 
 HEADERS = {
     'Access-Control-Allow-Origin': '*',
@@ -33,7 +32,6 @@ HEADERS = {
 }
 
 bot = Bot(TOKEN)
-tasks = []
 
 driver = ydb.Driver(
         endpoint=YDB_ENDPOINT,
@@ -43,6 +41,7 @@ driver = ydb.Driver(
     )
 driver.async_wait(fail_fast=True)
 pool = ydb.QuerySessionPool(driver)
+
 
 with open('menu_list_map.json', 'r', encoding='utf-8') as file:
     menu_data = json.load(file)
@@ -54,7 +53,6 @@ def get_item_by_id(item_id):
             return item
 
     return None
-
 
 
 def calculate_price(base_price, options):
@@ -83,16 +81,14 @@ def generate_keys():
 
 
 def save_keys(public_key, private_key):
-    expiration_time = datetime.now() + timedelta(hours=1)
-
     params = {'$public_key': public_key, '$private_key': private_key,
               '$status': 'pending'}
     query = """
         DECLARE $public_key AS Utf8;
         DECLARE $private_key AS Utf8;
         DECLARE $status AS Utf8;
-    
-        INSERT INTO keys (public_key, private_key, expires, status)
+
+        INSERT INTO keys (public_key, private_key, created_at, status)
         VALUES ($public_key, $private_key, CurrentUtcDatetime(), $status)
     """
 
@@ -100,11 +96,9 @@ def save_keys(public_key, private_key):
 
 
 def cleanup_expired_keys():
-    now = datetime.now()
-
     query = """
         DELETE FROM keys
-        WHERE expires > CurrentUtcDatetime();
+        WHERE status LIKE 'received';
     """
 
     pool.execute_with_retries(query=query)
@@ -208,7 +202,7 @@ async def webhook_handler(request_body):
     params = {'$user_tag': user_tag}
     query = """
         DECLARE $user_tag AS Utf8;
-        
+
         SELECT * FROM users
         WHERE user_tag LIKE $user_tag
         LIMIT 1;
@@ -250,7 +244,7 @@ async def send_invoice(chat_id, order_items):
     query = """
         DECLARE $order_id AS Int64;
         DECLARE $order_data AS Utf8;
-    
+
         INSERT INTO orders(order_id, order_data)
         VALUES ($order_id, CAST($order_data AS Json));
     """
@@ -279,7 +273,7 @@ async def handle_pre_checkout(update, context):
     params = {'$order_id': order_id}
     query = """
         DECLARE $order_id AS Int64;
-        
+
         SELECT * FROM orders
         WHERE order_id = $order_id;
     """
@@ -318,7 +312,6 @@ async def handle_pre_checkout(update, context):
 
 
 async def handle_successful_payment(update, context):
-    # Получение публичного и приватного ключей
     public_key, private_key = generate_keys()
     save_keys(public_key, private_key)
 
@@ -330,7 +323,7 @@ async def handle_successful_payment(update, context):
         await context.bot.send_message(chat_id, f'Ваш код: {public_key}')
         await context.bot.send_photo(chat_id, photo=buffer.getvalue())
 
-    tasks.append(asyncio.create_task(mark_order_ready(public_key, chat_id)))
+    await mark_order_ready(public_key, chat_id)
 
 
 async def mark_order_ready(public_key, chat_id):
@@ -339,7 +332,7 @@ async def mark_order_ready(public_key, chat_id):
     params = {'$public_key': public_key}
     query = """
         DECLARE $public_key AS Utf8;
-        
+
         SELECT * FROM keys
         WHERE public_key LIKE $public_key;
     """
@@ -348,7 +341,7 @@ async def mark_order_ready(public_key, chat_id):
     if len(result[0].rows) > 0:
         query = """
             DECLARE $public_key AS Utf8;
-            
+
             UPDATE keys
             SET status = 'ready'
             WHERE public_key LIKE $public_key;
@@ -380,7 +373,7 @@ async def handle_qr_code(update, context):
     params = {'$private_key': data}
     query = """
         DECLARE $private_key AS Utf8;
-        
+
         SELECT * FROM keys
         WHERE private_key LIKE $private_key;
     """
@@ -417,7 +410,7 @@ async def write_to_db(chat_id: int, user_tag: str) -> str:
     params = {"$chat_id": chat_id, "$user_tag": user_tag}
     find_query = """
         DECLARE $chat_id AS Int64;
-  
+
         SELECT chat_id, user_tag FROM users
         WHERE chat_id = $chat_id;
     """
@@ -429,7 +422,7 @@ async def write_to_db(chat_id: int, user_tag: str) -> str:
     insert_query = """
         DECLARE $chat_id AS Int64;
         DECLARE $user_tag AS Utf8;
-        
+
         INSERT INTO users(chat_id, user_tag)
         VALUES($chat_id, $user_tag);
     """
@@ -460,14 +453,9 @@ async def main(event, context):
 
     await application.initialize()
     await application.process_update(update)
-    await asyncio.gather(*tasks)
 
     return {
         'statusCode': 200,
         'headers': HEADERS,
         'body': json.dumps({'message': 'Successfully processed the update'})
     }
-
-
-if __name__ == "__main__":
-    asyncio.run(main(None, None))
