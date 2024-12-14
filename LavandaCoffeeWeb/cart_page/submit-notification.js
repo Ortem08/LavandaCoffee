@@ -1,5 +1,5 @@
-import { createConfirmNotification, createTimeoutNotification } from '../utils/notification/notification-creator.js';
-import { OrderList  } from '../utils/order-list.js';
+import {createConfirmNotification, createTimeoutNotification} from '../utils/notification/notification-creator.js';
+import {OrderList} from '../utils/order-list.js';
 
 
 const botUsername = 'LavandaCoffee_bot';
@@ -92,22 +92,56 @@ function pointOutErrorsForUnregistered () {
 }
 
 
-function submitForm() {
+function submitForm(event) {
+    event.preventDefault()
     if (form.checkValidity()) {
-        localStorage.setItem(
-            'tagTG', telegramTag.value
-        );
-        localStorage.setItem(
-            "last_order",
-            localStorage.getItem("cart_processed")
-        );
+        localStorage.setItem('tagTG', telegramTag.value);
+        localStorage.setItem("last_order", localStorage.getItem("cart_processed"));
 
-        form.submit();
-        orderList.clear_all();
+        // Собираем данные из формы
+        const formData = new FormData(form);
+        const data = {
+            'order-data': {},
+            'telegram-tag': null
+        };
+
+        formData.forEach((value, key) => {
+            if (key === 'telegram-tag') {
+                data['telegram-tag'] = value
+            }
+            else {
+                if (!data['order-data'][key]) {
+                    data['order-data'][key] = [];
+                }
+                data['order-data'][key].push(value);
+            }
+        });
+        console.log(JSON.stringify(data))
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            redirect: 'follow'
+        }).then(response => {
+            console.log('Response status:', response.status);
+            console.log('Response headers:', [...response.headers.entries()]);
+            if (response.redirected) {
+                console.log("REDIRECT!!!!!!")
+                orderList.clear_all();
+                window.location.href = response.url;
+            } else {
+                console.log(response);
+            }
+        }).catch((error) => {
+                console.error('Error:', error);
+            });
     } else {
         form.reportValidity();
     }
 }
+
 
 // function submitForm() {
 //     if (!(form.checkValidity() && checkFormSubmit())) {

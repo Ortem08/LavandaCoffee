@@ -1,0 +1,8 @@
+numpy==2.2.0
+Pillow==11.0.0
+python-telegram-bot==21.9
+qrcode==8.0
+Requests==2.32.3
+ydb==3.18.10
+yandexcloud==0.327.0
+opencv-python==4.10.0.84

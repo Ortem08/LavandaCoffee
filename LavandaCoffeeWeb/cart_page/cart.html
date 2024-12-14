@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <title> Корзина </title>
+        <link rel="stylesheet" href="../header/header.css" />
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="../utils/notification/notification.css">
+    </head>
+    <body>
+    <header>
+        <div id="header-background">
+            <img src="..\header\resources\header background.png">
+        </div>
+        <div id="header-container">
+            <div id="header-logo-container">
+                <a href="../main/main.html" id="header-logo"></a>
+            </div>
+            <div id="header-navbar-container">
+                <div id="telegram-register-button-container">
+                    <button id="telegram-register-button">
+                        <div>
+                            <span>
+                                ЗАРЕГИСТРИРОВАТЬСЯ
+                            </span>
+                            <img src="../header/resources/icon-telegram.png" alt="telegram-messenger" width="10%">
+                        </div>
+                    </button>
+                </div>
+                <nav id="header-navbar">
+                    <ul>
+                        <li class="nav-item">
+                            <a href="..\menu\menu.html">МЕНЮ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../main/main.html#social-media">КОФЕЙНИ</a>
+                        </li>
+                        <li class="nav-item" id="cart-nav-item">
+                            <a href="..\cart_page\cart.html">
+                                <img src="..\header\resources\icon-shopping-cart.png" alt="cart">
+                                <span>КОРЗИНА</span>
+                                <span class="cart-counter">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- <button id="nav-menu-btn">
+                        <img src="../header/resources/icon-nav-menu.png" alt="navigation menu">
+                    </button> -->
+                </nav>
+            </div>
+        </div>
+    </header>
+    <nav id="main-navbar-container">
+        <ul>
+            <li class="nav-item">
+                <a href="..\menu\menu.html">МЕНЮ</a>
+            </li>
+            <li class="nav-item">
+                <a href="../main/main.html#social-media">КОФЕЙНИ</a>
+            </li>
+            <li class="nav-item" id="cart-nav-item">
+                <a href="..\cart_page\cart.html">
+                    <img src="..\header\resources\icon-shopping-cart.png" alt="cart">
+                    <span>КОРЗИНА</span>
+                    <span class="cart-counter">0</span>
+                </a>
+            </li>
+        </ul>
+        <hr>
+    </nav>
+    <div class="cart-container">
+    <h1 class="cart-title">ВАШ ЗАКАЗ</h1>
+        <form class="cart-form" action="https://d5dom6r4atg8e323j87l.apigw.yandexcloud.net" method="POST">
+            <template id="item-template">
+                <fieldset class="item-card">
+                    <h3>
+                        <span class="item-name">coffee on beer</span>
+                        <div class="item-amount-container">
+                            <button type="button" class="quantity-btn" data-action="decrease">-</button>
+                            <input type="number" name="item-amount" class="item-amount" min="1" max="50" value="1">
+                            <button type="button" class="quantity-btn" data-action="increase">+</button>
+                        </div>
+                    </h3>
+                    <button type="button" class="remove-button">X</button>
+                    <input type="hidden" name="itemID" class="itemID" value="723AFE023">
+                    <input type="hidden" name="itemOptions" class="itemOptions" value="{}">
+                    <div class="total-price">
+                        <span>
+                            <!--total cost is-->
+                            <span class="multi-item-cost">multi-item-cost $</span>
+                            =
+                            <span class="one-item-cost">one-item-cost $</span>
+                            *
+                            <span class="amount-of-items-view">item-amount</span>
+                        </span>
+                    </div>
+                    <button class="item-options">?</button>
+                </fieldset>
+            </template>
+
+            <div class="item-list"></div>
+
+            <label>
+                Ваш тег в телеграмме
+                <input type="text" name="telegram-tag" class="telegram-tag-input" placeholder="@example" required pattern="^@.+$">
+            </label>
+
+            <div class="submit-block">
+                <span class="submit-price">0 ₽</span>
+                <button class="submit-button"> ЗАКАЗАТЬ </button>
+            </div>
+        </form>
+
+
+    </div>
+    </body>
+    <script type="module" src="submit-notification.js"></script>
+    <script type="module" src="option-notification.js"></script>
+    <script type="module" src="../header/header.js"></script>
+    <script type="module" src="cart.js"></script>
+</html>
