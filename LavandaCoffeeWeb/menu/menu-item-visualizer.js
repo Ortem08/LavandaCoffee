@@ -1,4 +1,4 @@
-import { OrderItem, RAW_CART_KEY  } from '../utils/order-list.js';
+import { OrderItem  } from '../utils/order-list.js';
 import { createTimeoutNotification } from '../utils/notification/notification-creator.js'
 
 export class MenuItemVisualizer {

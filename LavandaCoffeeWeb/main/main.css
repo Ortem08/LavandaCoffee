@@ -3,7 +3,7 @@ h2 {
 }
 
 header {
-    margin: 0px;
+    margin: 0;
 }
 
 #main-navbar-container {
@@ -23,7 +23,7 @@ header {
     right: 3%;
     bottom: 8%;
 
-    padding: 5% 0%;
+    padding: 5% 0;
     width: 50%;
     text-align: center;
 }
@@ -53,6 +53,6 @@ header {
         position: static;
 
         width: 90%;
-        margin: 5% 0%;
+        margin: 5% 0;
     }
 }
