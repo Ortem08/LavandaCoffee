@@ -20,7 +20,7 @@ from telegram.ext import (
     filters,
 )
 
-TOKEN = os.getenv("TOKEN")
+TOKEN = os.getenv("BOT_TOKEN")
 YDB_DATABASE = os.getenv("YDB_DATABASE")
 YDB_ENDPOINT = os.getenv("YDB_ENDPOINT")
 
@@ -37,7 +37,7 @@ driver = ydb.Driver(
         endpoint=YDB_ENDPOINT,
         database=YDB_DATABASE,
         credentials=ydb.iam.ServiceAccountCredentials.from_file(
-            key_file='authorized_key.json')
+            key_file='authorized.key')
     )
 driver.async_wait(fail_fast=True)
 pool = ydb.QuerySessionPool(driver)
@@ -320,7 +320,7 @@ async def handle_successful_payment(update, context):
         qr_code_img.save(buffer)
 
         chat_id = update.message.chat_id
-        await context.bot.send_message(chat_id, f'Ваш код: {public_key}')
+        await context.bot.send_message(chat_id, f'Ваш код: {public_key}. Когда заказ будет готов, покажите qr кассиру.')
         await context.bot.send_photo(chat_id, photo=buffer.getvalue())
 
     await mark_order_ready(public_key, chat_id)
